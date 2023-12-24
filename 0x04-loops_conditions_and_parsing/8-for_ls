@@ -2,6 +2,7 @@
 # This script displays the content of non-hidden files in a list format
 for file in *; do
 	if [ -f "$file" ]; then
-		echo "$file"
+		name_after_dash=$(echo "$file" | cut -d'-' -f2-)
+		echo "$name_after_dash"
 	fi
 done
