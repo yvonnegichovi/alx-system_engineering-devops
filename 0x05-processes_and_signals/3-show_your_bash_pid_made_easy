@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# It gets the PID of the script
+script_pid=$$
+while read -r pid; do
+	if [ "$pid" != "$script_pid" ]; then
+		name=$(ps -p "$pid" -o comm=)
+		echo "$pid $name"
+	fi
+done < <(pgrep -f bash)
