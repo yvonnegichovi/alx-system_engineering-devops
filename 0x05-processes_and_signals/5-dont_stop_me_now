@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Displays infinitely and uses kill
+./4-to_infinity_and_beyond &
+bg_process_pid=$!
+kill "$bg_process_pid"
