@@ -10,3 +10,8 @@ exec { 'install_flask':
   environment => ['LC_ALL=en_US.UTF-8', 'LANG=en_US.UTF-8'],
   creates     => '/usr/local/lib/python3.8/dist-packages/Flask-2.1.0.dist-info',
 }
+
+package { 'Werkzeug':
+  ensure   => '2.1.1',
+  provider => 'pip3',
+}
