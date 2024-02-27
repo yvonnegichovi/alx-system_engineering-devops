@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # Installing nginx web server
-sudo apt-get update -y -qq &&
-	sudo apt-get install nginx -y
-sudo service nginx start
+echo "Updating package lists..."
+sudo apt-get update -y -qq && echo "Package lists updated successfully." || { echo "Failed to update package lists."; exit 1; }
+echo "Installing nginx..."
+sudo apt-get install nginx -y && echo "Nginx installed successfully." || { echo "Failed to install Nginx."; exit 1; }
+echo "Starting nginx service..."
+sudo service nginx start && echo "Nginx service started successfully." || { echo "Failed to start Nginx service."; exit 1; }
 sudo ufw allow 'Nginx HTTP'
 sudo chown -R "$USER":"$USER" /var/www/html
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
