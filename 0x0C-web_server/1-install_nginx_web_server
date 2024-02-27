@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Installing nginx web server
-apt-get update
-apt-get install -y nginx
-EXPECTED_RESPONSE="Hello World!"
-ACTUAL_RESPONSE=$(curl -s http://localhost)
-if [[ "$ACTUAL_RESPONSE" == "$EXPECTED_RESPONSE"* ]]; then
-	echo "Nginx configured successfully."
-else
-	echo "Nginx configuration failed.Unexpected response: $ACTUAL_RESPONSE"
-fi
+sudo apt-get update -y -qq && \
+	sudo apt-get install nginx -y
+sudo service nginx start
+sudo ufw allow 'Nginx HTTP'
+sudo chwon -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+cp /var/www/html/index.nginx-debian.html /var/www/html/i/index.nginx-debian.htmlndex.nginx-debian.html.bckp
+echo -e "Hello World!" | dd status=none of=/var/www/html
+sudo service nginx restart
