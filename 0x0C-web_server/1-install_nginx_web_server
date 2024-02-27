@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # Installing nginx web server
-sudo apt-get update -y -qq && \
+sudo apt-get update -y -qq &&
 	sudo apt-get install nginx -y
 sudo service nginx start
 sudo ufw allow 'Nginx HTTP'
-sudo chwon -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
-cp /var/www/html/index.nginx-debian.html /var/www/html/i/index.nginx-debian.htmlndex.nginx-debian.html.bckp
-echo -e "Hello World!" | dd status=none of=/var/www/html
+sudo chown -R "$USER":"$USER" /var/www/html
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+echo -e "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 sudo service nginx restart
