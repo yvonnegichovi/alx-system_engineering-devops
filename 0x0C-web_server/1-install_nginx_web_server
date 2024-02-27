@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Installing nginx web server
+apt-get update
+apt-get install -y nginx
+EXPECTED_RESPONSE="Hello World!"
+ACTUAL_RESPONSE=$(curl -s http://localhost)
+if [[ "$ACTUAL_RESPONSE" == "$EXPECTED_RESPONSE"* ]]; then
+	echo "Nginx configured successfully."
+else
+	echo "Nginx configuration failed.Unexpected response: $ACTUAL_RESPONSE"
+fi
