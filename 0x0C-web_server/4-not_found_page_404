@@ -11,13 +11,13 @@ sudo chown -R "$USER":"$USER" /var/www/html
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
 echo '<!DOCTYPE html>' | sudo tee /var/www/html/404.html
-echo '<html lang="en">' | sudo tee -a var/www/html404.html
+echo '<html lang="en">' | sudo tee -a var/www/html/404.html
 echo '<head>' | sudo tee -a /var/www/html/404.html
 echo '	<meta charset="UTF-8">' | sudo tee -a /var/www/html/404.html
 echo '	<title>404 Not Found</title>' | sudo tee -a /var/www/html/404.html
 echo '</head>' | sudo tee -a /var/www/html/404.html
 echo '<body>' | sudo tee -a /var/www/html/404.html
-echo '	<h1>404 Not Found</h>' | sudo tee -a /var/html/404.html
+echo '	<h1>404 Not Found</h>' | sudo tee -a /var/www/html/404.html
 echo '	<p>Ceci n'"'"'est pas une page</p>' | sudo tee -a /var/www/html/404.html
 echo '</body>' | sudo tee -a /var/www/html/404.html
 echo '</html>' | sudo tee -a /var/www/html/404.html
