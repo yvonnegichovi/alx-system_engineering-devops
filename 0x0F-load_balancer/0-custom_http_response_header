@@ -2,8 +2,10 @@
 # This script configures Nginx to add a custom HTTP header
 
 # Install Nginx if not already installed
-sudo apt-get update
+sudo apt-get update -y -qq
 sudo apt-get install -y nginx
+
+sudo service nginx start
 
 # Define the custom header value (server hostname)
 HEADER_VALUE=$(hostname)
@@ -17,4 +19,3 @@ echo "Restarting Nginx..."
 sudo service nginx restart
 
 echo "Configuration complete."
-
