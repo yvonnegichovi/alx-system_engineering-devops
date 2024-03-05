@@ -28,15 +28,14 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 frontend http_front
-	bind *:80
-	stats uri /haproxy?stats
-	default_backend http_back
+        bind *:80
+        default_backend http_back
 
 backend http_back
-	balance roundrobin
-	server web-01 [446460]-web-01:80 check
-	server web-02 [446460]-web-02:80 check
+        balance roundrobin
+        server web-01 446460-web-01:80 35.175.130.20 check
+        server web-02 446460-web-02:80 35.175.63.155 check
 EOF
-sudo systemctl restart haproxy
-sudo systemctl enable haproxy
+sudo service restart haproxy
+sudo service enable haproxy
 echo "HAProxy installed and configured successfully"
