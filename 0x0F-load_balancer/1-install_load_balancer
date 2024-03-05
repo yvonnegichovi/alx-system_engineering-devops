@@ -14,4 +14,5 @@ backend web_servers
         server web-02 446460-web-02:80 35.175.63.155 check
 " > /etc/haproxy/haproxy.cfg
 sudo service start haproxy
+sudo service enable haproxy
 echo "HAProxy installed and configured successfully"
