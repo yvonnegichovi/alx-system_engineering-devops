@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# runs load balancer
+ssh -i ~/.ssh/id_pub ubuntu@3.85.16.236

@@ -13,6 +13,6 @@ backend web_servers
         server web-01 446460-web-01:80 35.175.130.20 check
         server web-02 446460-web-02:80 35.175.63.155 check
 " > /etc/haproxy/haproxy.cfg
-sudo service start haproxy
-sudo service enable haproxy
+sudo service haproxy start
+sudo service haproxy enable
 echo "HAProxy installed and configured successfully"
