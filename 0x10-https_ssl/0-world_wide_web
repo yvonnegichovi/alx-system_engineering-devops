@@ -1,2 +1,24 @@
 #!/usr/bin/env bash
 # configures my domain zone to have a subdomain that points to my load balancer
+
+domain="$1"
+subdomain="$2"
+
+# Define the function to display subdomain information
+display_subdomain_info() {
+	local subdomain=$1
+	local result=$(dig "$subdomain.$domain" +short)
+	local record_type=$(echo "$result" | awk 'NR==1 {print $2}')
+	local destination=$(echo "$result" | awk 'NR==1 {print $1}')
+	echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+# Display the subdomain information based on arguments
+if [ -z "$subdomain" ]; then
+	display_subdomain_info www
+	display_subdomain_info lb-01
+	display_subdomain_info web-01
+	display_subdomain_info web-02
+else
+	display_subdomain_info "$subdomain"
+fi
