@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+# configures my domain zone to have a subdomain that points to my load balancer
