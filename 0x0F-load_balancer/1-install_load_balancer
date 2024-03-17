@@ -1,40 +1,27 @@
-#!/usr/bin/env bash
-# installs HAProxy load balancer
+nstalls HAProxy load balancer
 sudo apt-get update -y
 sudo apt-get install -y haproxy
 sudo cp /etc/haproxy/haproxy.cfg haproxy_default.backup
 cat<< EOF | sudo tee /etc/haproxy/haproxy.cfg >/dev/null
-global
-    log /dev/log    local0
-    log /dev/log    local1 notice
-    chroot /var/lib/haproxy
-    stats socket /run/haproxy/admin.sock mode 660 level admin
-    stats timeout 30s
-    user haproxy
-    group haproxy
-    daemon
-
 defaults
     log global
     mode http
-    option httplog
-    option dontlognull
-    timeout connect 5000
-    timeout client  50000
-    timeout server  50000
+    timeout client 15s
+    timeout connect 10s
+    timeout server  15s
+    timeout http-request 10s
 
 frontend http_front
         bind *:80
         default_backend web_servers
 
 backend web_servers
-	mode http
+        mode http
         balance roundrobin
         server web-01 446460-web-01:80 54.165.3.212 check
         server web-02 446460-web-02:80 100.24.235.18 check
-	http-response set-header X-Served-By %[src]
+        http-response set-header X-Served-By %[src]
 EOF
-sudo service haproxy start
-sudo service haproxy enable
+sudo sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
 sudo service haproxy restart
 echo "HAProxy installed and configured successfully"
