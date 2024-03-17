@@ -1,26 +1,24 @@
 #!/usr/bin/env bash
-# Installs HAProxy load balancer
+# installs HAProxy load balancer
 sudo apt-get update -y
 sudo apt-get install -y haproxy
 sudo cp /etc/haproxy/haproxy.cfg haproxy_default.backup
 cat<< EOF | sudo tee /etc/haproxy/haproxy.cfg >/dev/null
 defaults
-    log global
-    mode http
-    timeout client 15s
-    timeout connect 10s
-    timeout server  15s
-    timeout http-request 10s
-
-frontend http_front
-        bind *:80
-        default_backend web_servers
-
-backend web_servers
         mode http
+        timeout client 15s
+        timeout connect 10s
+        timeout server  15s
+        timeout http-request 10s
+
+frontend happyfaces-tech-frontend
+        bind *:80
+        default_backend happyfaces-tech-backend
+
+backend happyfaces-tech-backend
         balance roundrobin
-        server web-01 446460-web-01:80 54.165.3.212 check
-        server web-02 446460-web-02:80 100.24.235.18 check
+        server 446460-web-01 54.165.3.212:80 check
+        server 446460-web-02 100.24.235.18:80 check
         http-response set-header X-Served-By %[src]
 EOF
 sudo sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
