@@ -1,30 +1,28 @@
 # Install nginx package
+exec { 'update system':
+	command => '/usr/bin/apt-get update',
+}
+
 package { 'nginx':
-  ensure => installed,
+	ensure => 'installed',
+	require => Exec['update system']
 }
 
-# Define custom HTTP header value (server hostname)
-$hostname_value = $::hostname
-
-# Configure Nginx to add the custom header
-file { '/etc/nginx/sites-available/default':
-   ensure => file,
-   content => template('nginx/default.erb'),
-   require => Package['nginx'],
-   notify => Service['nginx'],
+file {'/var/www/html/index.html':
+	content => 'Hello World!'
 }
 
-# Enable default site
-file { '/etc/nginx/sites-enabled/default':
-   ensure => link,
-   target => '/etc/nginx/sites-available/default',
-   require => Package['nginx'],
-   notify => Service['nginx'],
+exec {'redirect_me':
+	command => 'sed -i "24i\	rewrite ^/redirect_me https://th3-gr00t.tk/ permanent;" /etc/nginx/sites-available/default',
+	provider => 'shell'
 }
 
-# Define nginx service
-service { 'nginx':
-   ensure => running,
-   enable => true,
-   subscribe => [File['/etc/nginx/sites-available/default'], File['/etc/nginx/nginx.conf']]
+exec {'HTTP header':
+	command => 'sed -i "25i\	add_header X-Served-By \$hostname;" /etc/nginx/sites-available/default',
+	provider => 'shell'
+}
+
+service {'nginx':
+	ensure => running,
+	require => Package['nginx']
 }
