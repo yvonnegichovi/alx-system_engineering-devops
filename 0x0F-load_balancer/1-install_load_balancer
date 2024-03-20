@@ -39,8 +39,8 @@ frontend happyfaces-tech-frontend
 
 backend happyfaces-tech-backend
         balance roundrobin
-        server 446460-web-01 54.165.3.212:80 check
-        server 446460-web-02 100.24.235.18:80 check
+        server 446460-web-01 54.90.9.113:80 check
+        server 446460-web-02 100.27.14.247:80 check
 EOF
 sudo service haproxy restart
 echo "HAProxy installed and configured successfully"
