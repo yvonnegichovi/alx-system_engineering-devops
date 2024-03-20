@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+# Find out what stops the container's Nginx installation from listening on 80
