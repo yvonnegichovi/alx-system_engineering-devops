@@ -1,44 +1,28 @@
 #!/usr/bin/env bash
 # A bash script that generates MYSQL dump and creates a compressed archive
 
-if [ $# -ne 1 ]; then
-	echo "Usage: $0 <mysql_password>"
-	exit 1
+if [ -z "$1" ]; then
+    echo "Usage: $0 <mysql_password>"
+    exit 1
 fi
 
-#MySQL root user credentials
-MYSQL_USER="root"
-MYSQL_PASSWORD="$1"
-
-#Directory to store backup files
-BACKUP_DIR="/tmp"
-
-# MySQL dump file name
-MYSQL_DUMP_FILE="backup.sql"
-
-# Compressed archive name
-ARCHIVE_NAME="$DATE.tar.gz"
-
-# Perform MySQL dump
-mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_DIR/$MYSQL_DUMP_FILE"
+# MySQL dump command with password
+mysqldump -uroot -p"$1" --all-databases > backup.sql
 
 # Check if MySQL dump was successful
 if [ $? -ne 0 ]; then
-	echo "Error: MySQL dump failed. Exiting."
-       	exit 1
+    echo "Error: MySQL dump failed. Exiting."
+    exit 1
 fi
 
-# Create compressed archive
-tar -czf "$BACKUP_DIR/$ARCHIVE_NAME" -C "$BACKUP_DIR" "$MYSQL_DUMP_FILE"
+# Create tarball with date format
+backup_file="$(date +'%d-%m-%Y').tar.gz"
+tar -czvf "$backup_file" backup.sql
 
-# Check if archive creation was successful
+# Check if tarball creation was successful
 if [ $? -ne 0 ]; then
-	echo "Error: Compressed archive creation failed. Exiting."
-	exit 1
+    echo "Error: Tarball creation failed. Exiting."
+    exit 1
 fi
 
-# Clean up dump file
-rm "$BACKUP_DIR/$MYSQL_DUMP_FILE"
-
-# Display success message
-echo "MySQL backup created successfully: $BACKUP_DIR/$ARCHIVE_NAME"
+echo "MySQL backup created successfully: $backup_file"
