@@ -2,13 +2,14 @@
 """Returns information about an employees TODO list
 when given an employee ID"""
 
+import csv
 import requests
 import sys
 
 url = "https://jsonplaceholder.typicode.com"
 
 
-def fetch_todo_progress(employee_id):
+def export_to_csv(employee_id):
     """Fetches the employees todo list after giving a number request"""
     url_user = f"{url}/users/{employee_id}"
     url_todos = f"{url}/users/{employee_id}/todos"
@@ -30,24 +31,21 @@ def fetch_todo_progress(employee_id):
         return
 
     for todo in response_todos.json():
-        TOTAL_NUMBER_OF_TASKS += 1
-        if todo.get("completed"):
-            NUMBER_OF_DONE_TASKS += 1
-            TASK_TITLE.append(todo.get("title"))
-    print("Employee {} is done with tasks({}/{}):".format(
-        EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
-    for todo in TASK_TITLE:
-        print("\t {}".format(todo))
+        TASK_TITLE.append((todo.get("completed"), todo.get("title")))
 
-
-    def export_to_csv(employee_id, task_data):
-        """Exports the task data to a CSV file"""
-        file_name = f"{employee_id}.csv"
-        with open(file_name, "w", newline="") as csv_file:
-            writer = csv.writer(csv_file)
-            writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-            writer.writerows(task_data)
-        print(f"Data exported to {file_name}")
+    file_name = f"{employee_id}.csv"
+    with open(file_name, "w", newline="") as csv_file:
+        task_data =["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
+        writer = csv.DictWriter(csv_file, task_data=task_data, quoting=csv.QUOTE_ALL)
+        for todo in TASK_TITLE:
+            writer.writerow(
+                {
+                    "USER_ID": employee_id,
+                    "USERNAME": employee_name,
+                    "TASK_COMPLETED_STATUS": todo[0],
+                    "TASK_TITLE": todo[1],
+                }
+            )
 
 
 if __name__ == "__main__":
@@ -61,4 +59,4 @@ if __name__ == "__main__":
     except ValueError:
         print("Employee ID must be an integer")
         sys.exit(1)
-    fetch_todo_progress(employee_id)
+    export_to_csv(employee_id)
