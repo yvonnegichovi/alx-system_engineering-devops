@@ -35,13 +35,13 @@ def export_to_csv(employee_id):
 
     file_name = f"{employee_id}.csv"
     with open(file_name, "w", newline="") as csv_file:
-        task_data =["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
-        writer = csv.DictWriter(csv_file, task_data=task_data, quoting=csv.QUOTE_ALL)
+        fieldnames =["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
         for todo in TASK_TITLE:
             writer.writerow(
                 {
                     "USER_ID": employee_id,
-                    "USERNAME": employee_name,
+                    "USERNAME": EMPLOYEE_NAME,
                     "TASK_COMPLETED_STATUS": todo[0],
                     "TASK_TITLE": todo[1],
                 }
