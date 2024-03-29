@@ -2,8 +2,8 @@
 """Returns information about an employees TODO list
 when given an employee ID"""
 
-import sys
 import requests
+import sys
 
 url = "https://jsonplaceholder.typicode.com"
 
@@ -34,8 +34,8 @@ def fetch_todo_progress(employee_id):
         if todo.get("completed"):
             NUMBER_OF_DONE_TASKS += 1
             TASK_TITLE.append(todo.get("title"))
-    print("Employee {} is done with tasks({}/{}):".
-            format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+    print("Employee {} is done with tasks({}/{}):".format(
+        EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
     for todo in TASK_TITLE:
         print("\t{}".format(todo))
 
