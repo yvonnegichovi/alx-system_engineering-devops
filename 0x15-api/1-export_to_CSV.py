@@ -19,7 +19,7 @@ def export_to_csv(employee_id):
         print("Failed to fetch data for employee ID {}".format(employee_id))
         return
 
-    EMPLOYEE_NAME = response_user.json().get("name")
+    EMPLOYEE_NAME = response_user.json().get("username")
     TOTAL_NUMBER_OF_TASKS = 0
     NUMBER_OF_DONE_TASKS = 0
     TASK_TITLE = []
