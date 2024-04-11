@@ -25,10 +25,8 @@ def recurse(subreddit, hot_list=[], after=None):
         data = response.json()
         posts = data['data']['children']
     except KeyError:
-        print("Error: Key error while accessing data")
         return None
     if not posts:
-        print("Info: No posts found")
         return hot_list
     for post in posts:
         hot_list.append(post['data']['title'])
