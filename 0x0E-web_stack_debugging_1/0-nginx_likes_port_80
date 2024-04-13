@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
 # Find out what stops the container's Nginx installation from listening on 80
+# Removes the default Nginx configuration file
+rm /etc/nginx/sites-enabled/default
+# Configures Nginx to listen on port 80 for all active IPv4 IPs
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
